@@ -5,11 +5,15 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    const elfutils = b.dependency("elfutils", .{
+    const libelf = b.dependency("elfutils", .{
         .target = target,
         .optimize = optimize,
-    });
-    const libelf = elfutils.artifact("elf");
+    }).artifact("elf");
+
+    const zlib = b.dependency("zlib", .{
+        .target = target,
+        .optimize = optimize,
+    }).artifact("z");
 
     const lib = b.addLibrary(.{
         .name = "bpf",
@@ -49,8 +53,12 @@ pub fn build(b: *std.Build) void {
         },
     });
     lib.root_module.linkLibrary(libelf);
+    lib.root_module.linkLibrary(zlib);
     lib.root_module.addIncludePath(upstream.path("include"));
     lib.root_module.addIncludePath(upstream.path("include/uapi"));
-
+    lib.root_module.addIncludePath(upstream.path("src"));
+    lib.installHeadersDirectory(upstream.path("include"), "include", .{});
+    lib.installHeadersDirectory(upstream.path("include/uapi"), "include/uapi", .{});
+    lib.installHeadersDirectory(upstream.path("src"), "bpf", .{});
     b.installArtifact(lib);
 }
