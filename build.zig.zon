@@ -1,0 +1,17 @@
+.{
+    .name = .libbpf,
+    .version = "1.6.2",
+    .minimum_zig_version = "0.15.1",
+    .paths = .{""},
+    .fingerprint = 0xb44e6e3d3962a54,
+    .dependencies = .{
+        .libbpf = .{
+            .url = "https://github.com/libbpf/libbpf/archive/refs/tags/v1.6.2.tar.gz",
+            .hash = "N-V-__8AAGn3QgBlsokJxrIzZshklz3CnJ5PmN4IR9wSZy5W",
+        },
+        .elfutils = .{
+            .url = "git+https://github.com/gregdel/elfutils.zig/#2c57ba7520a682016b2ebc51fee823cb82563fdb",
+            .hash = "elfutils-0.192.0-lx7CHHz6AQDNJhUwtyZgC3_Dj5Pp2fwHYu-dVKpY486U",
+        },
+    },
+}
