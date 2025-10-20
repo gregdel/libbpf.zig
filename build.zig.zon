@@ -13,8 +13,8 @@
             .hash = "N-V-__8AAGn3QgBlsokJxrIzZshklz3CnJ5PmN4IR9wSZy5W",
         },
         .elfutils = .{
-            .url = "git+https://github.com/gregdel/elfutils.zig/#2c57ba7520a682016b2ebc51fee823cb82563fdb",
-            .hash = "elfutils-0.192.0-lx7CHHz6AQDNJhUwtyZgC3_Dj5Pp2fwHYu-dVKpY486U",
+            .url = "git+https://github.com/allyourcodebase/elfutils#f6127e5dbec045e840a17b0af0b5df752de96ecf",
+            .hash = "elfutils-0.192.0-lx7CHHz6AQCyrTu5ZyBUsH0RfdtrYfLYnpBAkPG5SEMI",
         },
     },
     .paths = .{
