@@ -22,6 +22,7 @@ pub fn build(b: *std.Build) void {
             .target = target,
             .optimize = optimize,
             .link_libc = true,
+            .sanitize_c = .off,
         }),
     });
 
@@ -51,14 +52,33 @@ pub fn build(b: *std.Build) void {
             "linker.c",
             "zip.c",
         },
+        .flags = &.{
+            "-D_LARGEFILE64_SOURCE",
+            "-D_FILE_OFFSET_BITS=64",
+        },
     });
     lib.root_module.linkLibrary(libelf);
     lib.root_module.linkLibrary(zlib);
     lib.root_module.addIncludePath(upstream.path("include"));
     lib.root_module.addIncludePath(upstream.path("include/uapi"));
     lib.root_module.addIncludePath(upstream.path("src"));
-    lib.installHeadersDirectory(upstream.path("include"), "include", .{});
-    lib.installHeadersDirectory(upstream.path("include/uapi"), "include/uapi", .{});
-    lib.installHeadersDirectory(upstream.path("src"), "bpf", .{});
+
+    lib.installHeadersDirectory(upstream.path("src"), "bpf", .{
+        .include_extensions = &.{
+            "bpf.h",
+            "bpf_core_read.h",
+            "bpf_endian.h",
+            "bpf_helper_defs.h",
+            "bpf_helpers.h",
+            "bpf_tracing.h",
+            "btf.h",
+            "libbpf.h",
+            "libbpf_common.h",
+            "libbpf_legacy.h",
+            "libbpf_version.h",
+            "skel_internal.h",
+            "usdt.bpf.h",
+        },
+    });
     b.installArtifact(lib);
 }
